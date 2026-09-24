@@ -1,0 +1,6 @@
+{
+  "model_name": "qwen3-vl:32b",
+  "temperature": 0.0,
+  "max_tokens": 500,
+  "timeout": 120
+}

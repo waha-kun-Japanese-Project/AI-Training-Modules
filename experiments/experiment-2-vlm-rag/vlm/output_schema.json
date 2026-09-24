@@ -1,0 +1,8 @@
+{
+  "problem_type": "pipe_damage",
+  "visual_observations": [
+    "visible water leakage",
+    "damaged pipe section"
+  ],
+  "affected_component": "irrigation pipe"
+}

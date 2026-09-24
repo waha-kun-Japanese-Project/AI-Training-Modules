@@ -1,0 +1,7 @@
+{
+  "problem_types": [
+    "blockage",
+    "overflow",
+    "pipe_damage"
+  ]
+}
