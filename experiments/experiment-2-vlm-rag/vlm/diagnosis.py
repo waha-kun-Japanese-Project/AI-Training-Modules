@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 class VisualDiagnosis(BaseModel):
     problem_type: Literal[
+	"normal",
         "blockage",
         "overflow",
         "pipe_damage",

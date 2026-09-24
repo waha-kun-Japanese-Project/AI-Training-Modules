@@ -4,7 +4,6 @@ import httpx
 
 from vlm.interface import VLMInterface
 from vlm.prompt_loader import PromptLoader
-from vlm.diagnosis import VisualDiagnosis
 from vlm.parser import parse_diagnosis
 
 
@@ -34,9 +33,15 @@ class OllamaVLM(VLMInterface):
 
         payload = {
             "model": self.model_name,
-            "prompt": self.prompt_loader.load(),
-            "images": [image_base64],
+            "messages": [
+                {
+                    "role": "user",
+                    "content": self.prompt_loader.load(),
+                    "images": [image_base64],
+                }
+            ],
             "stream": False,
+            "think": False,
             "options": {
                 "temperature": self.temperature,
                 "num_predict": self.max_tokens,
@@ -45,7 +50,7 @@ class OllamaVLM(VLMInterface):
 
         async with httpx.AsyncClient(timeout=self.timeout) as client:
             response = await client.post(
-                f"{self.base_url}/api/generate",
+                f"{self.base_url}/api/chat",
                 json=payload,
             )
 
@@ -53,8 +58,11 @@ class OllamaVLM(VLMInterface):
 
         ollama_response = response.json()
 
+        print("RAW VLM RESPONSE:")
+        print(ollama_response["message"]["content"])
+
         return parse_diagnosis(
-            ollama_response["response"]
+            ollama_response["message"]["content"]
         )
 
     async def health_check(self) -> bool:

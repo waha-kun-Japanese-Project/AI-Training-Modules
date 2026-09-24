@@ -1,5 +1,6 @@
 {
   "problem_types": [
+    "normal",
     "blockage",
     "overflow",
     "pipe_damage"
