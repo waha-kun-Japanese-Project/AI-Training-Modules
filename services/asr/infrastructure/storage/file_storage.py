@@ -1,12 +1,12 @@
 from pathlib import Path
 
-from core.config import settings
+from config import settings
 from shared.logging import get_logger
 logger = get_logger(__name__)
 
 
 def get_audio_path(request_id: str, extension: str) -> str:
-    upload_dir = Path(settings.storage.upload_dir)
+    upload_dir = Path(settings.ASR_UPLOAD_DIR)
 
     upload_dir.mkdir(
         parents=True,

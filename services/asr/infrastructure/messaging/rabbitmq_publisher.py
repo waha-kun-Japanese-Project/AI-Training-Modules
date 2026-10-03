@@ -1,7 +1,7 @@
 import aio_pika
 import json
 from domain.entities.transcription import Transcription
-from core.config import settings
+from config import settings
 from shared.logging import get_logger
 logger = get_logger(__name__)
 
@@ -28,7 +28,7 @@ class RabbitMQPublisher:
                 correlation_id = transcription.request_id,
                 content_type = "application/json"
             ),
-            routing_key = settings.rabbitmq.results_queue,
+            routing_key = settings.RABBITMQ_RESULTS_QUEUE,
         )
 
         logger.info(

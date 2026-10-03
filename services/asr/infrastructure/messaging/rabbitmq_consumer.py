@@ -3,7 +3,7 @@ import json
 
 import aio_pika
 
-from core.config import settings
+from config import settings
 from shared.logging import get_logger
 logger = get_logger(__name__)
 from domain.audio_validator import validate_extension
@@ -75,7 +75,7 @@ class RabbitMQConsumer:
                 )
 
                 max_size_bytes = (
-                    settings.audio.max_upload_size_mb
+                    settings.ASR_MAX_UPLOAD_SIZE_MB
                     * 1024
                     * 1024
                 )

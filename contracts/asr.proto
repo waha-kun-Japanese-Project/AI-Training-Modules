@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package asr;
+
+service ASRService {
+    rpc Transcribe(TranscriptionRequest)
+        returns (TranscriptionResponse);
+}
+
+message TranscriptionRequest {
+    string request_id = 1;
+    string audio_url = 2;
+    string extension = 3;
+}
+
+message TranscriptionResponse {
+    string request_id = 1;
+    TranscriptionStatus status = 2;
+    string text = 3;
+    double processing_time = 4;
+    string error = 5;
+}
+
+enum TranscriptionStatus {
+    PENDING = 0;
+    PROCESSING = 1;
+    COMPLETED = 2;
+    FAILED = 3;
+}

@@ -3,7 +3,7 @@ from api import dependencies
 from api.schemas.transcription import TranscriptionRequestSchema
 from infrastructure.storage.http_audio_downloader import HttpAudioDownloader
 from infrastructure.storage.file_storage import get_audio_path, delete_audio
-from core.config import settings
+from config import settings
 
 router = APIRouter(
     prefix = "/api/v1/transcriptions",
@@ -30,7 +30,7 @@ async def transcribe(request: TranscriptionRequestSchema):
         await audio_downloader.download(
             audio_url=request.audio_url,
             destination_path=audio_path,
-            max_size_bytes=settings.audio.max_upload_size_mb * 1024 * 1024,
+            max_size_bytes=settings.ASR_MAX_UPLOAD_SIZE_MB * 1024 * 1024,
 
         )
 

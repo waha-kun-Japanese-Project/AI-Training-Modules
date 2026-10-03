@@ -5,7 +5,14 @@ from datetime import timedelta
 
 import aio_pika
 from minio import Minio
-from core.config import settings
+
+import sys
+from pathlib import Path
+
+ASR_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ASR_DIR))
+
+from config import settings
 
 AUDIO_FILE = "audio2878.wav"
 MINIO_BUCKET = "asr-audio"
@@ -36,22 +43,22 @@ async def main():
     # 2. Connect to RabbitMQ
     # -----------------------------
     connection = await aio_pika.connect_robust(
-        host=settings.rabbitmq.host,
-        port=settings.rabbitmq.port,
-        login=settings.rabbitmq.user,
-        password=settings.rabbitmq.password,
-        virtualhost=settings.rabbitmq.vhost,
+        host=settings.RABBITMQ_HOST,
+        port=settings.RABBITMQ_PORT,
+        login=settings.RABBITMQ_USER,
+        password=settings.RABBITMQ_PASSWORD,
+        virtualhost=settings.RABBITMQ_VHOST,
     )
 
     channel = await connection.channel()
 
     requests_queue = await channel.declare_queue(
-        settings.rabbitmq.requests_queue,
+        settings.RABBITMQ_REQUESTS_QUEUE,
         durable=True,
     )
 
     results_queue = await channel.declare_queue(
-        settings.rabbitmq.results_queue,
+        settings.RABBITMQ_RESULTS_QUEUE,
         durable=True,
     )
 
